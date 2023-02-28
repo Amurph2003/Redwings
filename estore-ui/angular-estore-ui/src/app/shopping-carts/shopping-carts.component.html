@@ -1,0 +1,43 @@
+
+<h3 align="right" *ngIf="user" class="user">Hello, {{user.username}}</h3>
+
+<nav *ngIf="user">
+    <a class="nav_item" routerLink="/{{user.username}}/browse">Browse Products</a>
+    <div class="shoppingCart">
+        <a class="nav_item" id="outLog" routerLink="/login">Log Out</a>
+        <a id="cart" routerLink="/{{user.username}}/shopping-carts">
+            <img src="../../assets/cartIcon.png" alt="Shopping cart icon" id="cartIcon">
+        </a>
+    </div>
+</nav>
+
+
+<div *ngIf="user" id="shopping">
+    
+    <h2 class="header">Shopping Cart</h2>
+    <div id="cartDetails">
+        <p id="price">Total: ${{total}}&emsp;{{congrats}}</p>
+        <button type="button" class="checkout" title="checkout for purchase" id="buy"
+            (click)="checkout(user.username)">Checkout</button>
+    </div>
+
+    <ul class="jerseys" id="carted">
+        <li *ngFor="let jersey of jerseys">
+            <div id="jerseyCart">
+            <a routerLink="/{{user.username}}/view/{{jersey.id}}">
+                <div id="cartL">
+                    <img id="cartImg" width="225px" height="300px" src="{{jersey.imageUrl}}" alt="Displays an image of jersey">
+                    <p [hidden]="auto(jersey.imageUrl)" id="{{jersey.color}}-name-del">{{jersey.name}}</p>
+                    <p [hidden]="auto(jersey.imageUrl)" id="{{jersey.color}}-number-del">{{jersey.number}}</p>
+                  </div>
+            </a>
+            <p>#{{jersey.number}} {{jersey.name}}<br>${{jersey.price}}<br>(In Cart: {{jersey.quantity}})</p>
+            <button type="button" class="remove" title="remove jersey" 
+                    (click)="return(user.username, jersey)">Remove from Cart</button>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+

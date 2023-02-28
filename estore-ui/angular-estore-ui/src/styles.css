@@ -1,0 +1,471 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Basic Page Setup*/
+body {
+    background: #CE1126; 
+    margin: 0%;
+}
+
+h1 {
+    font-family: Impact, 'Stencil Std', fantasy, 'Arial Narrow Bold', sans-serif;
+    font-size: 55px;
+    font-weight: 300;
+    padding-left: 3%;
+}
+
+.user {
+    padding-right: 2%;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+/*Navigation Bar*/
+nav {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: darkred;
+    width: 100%;
+}
+
+.nav_item {
+    text-decoration: none;
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 25px;
+    
+}
+
+.nav_item:visited {
+    text-decoration: none;
+    color: gold;
+}
+
+.nav_item:hover {
+    text-decoration: none;
+    background-color: aliceblue;
+    color: red;
+}
+
+#outLog {
+    position: absolute;
+    right: 75px;
+}
+
+#cart {
+    position: absolute;
+    right: 30px;
+}
+
+#cartIcon{
+    padding-top: 10px;
+    width: 40px;
+    height: 40px;
+    float: right;
+    vertical-align: middle;
+}
+
+/* Browse Jersey Layout*/
+
+ul {
+    list-style-type: none;
+    max-width: fit-content;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-right: 40px;
+    /* grid-template-columns: repeat(6, 1fr);
+    grid-gap: 20px; */
+}
+
+li {
+    text-decoration: none;
+    padding: 1%;
+}
+
+ul::after {
+    content: '';
+    width: 225px;
+    padding: 1%;
+    margin-left: auto;
+}
+
+#browseImg, #browseAuto {
+    max-height: 300px;
+}
+
+#RED-name-browse {
+    color: white;
+    font-family: 'Rockwell';
+    font-size: 23px;
+    text-align: center;
+	position: relative;
+    top: -268px;
+    text-decoration: none;
+    margin: 0%;
+}
+
+#RED-number-browse {
+    color: white;
+    font-family: Impact;
+    font-size: 5vw;
+    text-align: center;
+    position: relative;
+    top: -260px;
+    margin: 0%;
+}
+
+#WHITE-name-browse {
+    color: rgb(177, 20, 20);
+    font-family: 'Rockwell';
+    font-size: 23px;
+    text-align: center;
+	position: relative;
+    top: -270px;
+    text-decoration: none;
+    margin: 0%;
+}
+
+#WHITE-number-browse {
+    color: rgb(177, 20, 20);
+    font-family: Impact;
+    font-size: 5vw;
+    text-align: center;
+    position: relative;
+    top: -260px;
+    margin: 0%;
+}
+
+#jerseyInfo {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+#addCart {
+    margin: 0;
+    background-color: darkred;
+    color: goldenrod;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0%;
+}
+
+#stock {
+    margin: 0;
+    padding-bottom: 3px;
+}
+
+/* Add and Remove Page */
+
+#outLogAdmin {
+    position: absolute;
+    right: 70px;
+}
+
+#ars {
+    position: relative;
+    right: -350px;
+}
+
+#add {
+    padding-top: 3%;
+    padding-left: 3%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    max-width: 30%;
+}
+
+#btn {
+    padding-left: 5%;
+    padding-top: 1%;
+}
+
+#deletion {
+    width: 70%;
+    position: absolute;
+    right: 30px;
+    top: 45%
+}
+
+.heading {
+    font-size: 25px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#create {
+    padding-left: 6%;
+}
+
+#delete {
+    text-align: center;
+}
+
+#browseDel {
+    max-width: 10vw;
+    max-height: 20vh;
+}
+
+#RED-name-del {
+    color: white;
+    font-family: 'Rockwell';
+    font-size: 1.13vw;
+    text-align: center;
+	position: relative;
+    top: -160px;
+    text-decoration: none;
+    margin: 0%;
+}
+
+#RED-number-del {
+    color: white;
+    font-family: Impact;
+    font-size: 3vw;
+    text-align: center;
+    position: relative;
+    top: -160px;
+    margin: 0%;
+}
+
+#WHITE-name-del {
+    color: rgb(177, 20, 20);
+    font-family: 'Rockwell';
+    font-size: 1.13vw;
+    text-align: center;
+	position: relative;
+    top: -160px;
+    text-decoration: none;
+    margin: 0%;
+}
+
+#WHITE-number-del {
+    color: rgb(177, 20, 20);
+    font-family: Impact;
+    font-size: 4vw;
+    text-align: center;
+    position: relative;
+    top: -160px;
+    margin: 0%;
+}
+
+
+/* Detail Page*/
+
+.image {
+    padding-left: 3%;
+    width: 25vw;
+}
+
+#detailImg {
+    padding-top: 3%;
+    width: 25vw;
+    height: 60vh;
+    position: absolute;
+}
+
+.details {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-left: 35%;
+    float: left;
+    position: absolute;
+    top: 40%;
+}
+
+.updates {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    padding-left: 35%;
+    z-index: 2;
+}
+
+.buttons {
+    padding: 20px;
+    padding-top: 5%;
+    float: left;
+    position: absolute;
+    padding-left: 45%;
+}
+
+
+#RED-name {
+    color: white;
+    font-family: 'Rockwell';
+    font-size: 35px;
+    text-align: center;
+	position: relative;
+    margin: 0%;
+    padding-top: 30%;
+}
+
+#RED-number {
+    color: white;
+    font-family: Impact;
+    font-size: 9vw;
+    text-align: center;
+	position: relative;
+    margin: 0%;
+    margin-bottom: 15%;
+}
+
+#WHITE-name {
+    color: rgb(177, 20, 20);
+    font-family: 'Rockwell';
+    font-size: 35px;
+    text-align: center;
+	position: relative;
+    margin: 0%;
+    padding-top: 30%;
+}
+
+#WHITE-number {
+    color: rgb(177, 20, 20);
+    font-family: Impact;
+    font-size: 9vw;
+    text-align: center;
+	position: relative;
+    margin: 0%;
+    margin-bottom: 15%;
+}
+
+#space {
+    /* padding: 18vh; */
+    padding-top: 30%;
+    padding-bottom: 54.25%;
+    margin-bottom: 15%;
+}
+
+#specific {
+    font-size: 40px;
+}
+
+#priced {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#deets {
+    font-size: 25px;
+}
+
+/* Shopping Cart */
+
+#cartDetails {
+    padding-top: 40px;
+    float: right;
+    padding-right: 5%;
+}
+
+.header {
+    padding-top: 15px;
+    float: left;
+    padding-left: 5%;
+    font-size: 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#cartL {
+    width: 10vw;
+    height: 20vh;
+}
+
+#price {
+    font-size: 20px;
+    float: left;
+}
+
+#buy {
+    margin: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+#carted {
+    position: absolute;
+    max-width: 100%;
+    padding-top: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 100%;
+}
+
+#cartImg {
+    width: 10vw;
+    height: 20vh;
+}
+
+/* Search */
+
+.search {
+    padding-top: 3%;
+    padding-left: 3%;
+}
+
+
+#search {
+    font-size: 30px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#sb {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: darkred;
+    width: 350px;
+    text-decoration: none;
+}
+
+#sbText {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: goldenrod;
+    font-size: 18px;
+    text-align: center;
+    width: inherit;
+}
+
+#sb:hover {
+    text-decoration: none;
+}
+
+#sb:visited {
+    text-decoration: none;
+}
+
+#searchImg {
+    height: 75px;
+}
+
+/* Login Page */
+
+#log {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+}
+
+#login {
+    position: relative;
+    padding-left: 40%;
+    padding-right: 35%;
+    padding-top: 20%;
+}
