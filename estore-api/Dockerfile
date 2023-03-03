@@ -2,7 +2,7 @@ FROM maven:3.8.7-openjdk-18 AS build
 # FROM openjdk:11-jre-slim
 WORKDIR /home/app
 COPY . /home/app
-RUN ls /home/app
+RUN ls /home/app/data
 RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:18
