@@ -10,4 +10,4 @@ FROM openjdk:18
 # COPY --from=build /home/app/data /usr/local/lib
 EXPOSE 5600
 # ENTRYPOINT ["java","-jar","/usr/local/lib/Redwings.war"]
-RUN ./mvnw clean package
+RUN ./mvnw spring-boot:run
