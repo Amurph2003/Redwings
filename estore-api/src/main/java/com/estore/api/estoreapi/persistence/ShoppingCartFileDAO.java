@@ -53,7 +53,7 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
         // Serializes the Java Objects to JSON objects into the file
         // writeValue will thrown an IOException if there is an issue
         // with the file or reading from the file
-        objectMapper.writeValue(new File(filename), cartArray);
+        objectMapper.writeValue(new File(filename),cartArray);
         return true;
     }
    
