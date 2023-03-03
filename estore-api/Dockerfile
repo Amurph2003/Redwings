@@ -3,10 +3,11 @@ FROM maven:3.8.7-openjdk-18 AS build
 WORKDIR /home/app
 COPY . /home/app
 RUN ls /home/app/data
-RUN mvn -f /home/app/pom.xml clean package
+# RUN mvn -f /home/app/pom.xml clean package
+RUN mvn compile exec:java
 
-FROM openjdk:18
-COPY --from=build /home/app/Redwings.jar /usr/local/lib/Redwings.jar
-COPY --from=build /home/app/data /usr/local/lib
+# FROM openjdk:18
+# COPY --from=build /home/app/Redwings.jar /usr/local/lib/Redwings.jar
+# COPY --from=build /home/app/data /usr/local/lib
 EXPOSE 5600
-ENTRYPOINT ["java","-jar","/usr/local/lib/Redwings.jar"]
+# ENTRYPOINT ["java","-jar","/usr/local/lib/Redwings.jar"]
