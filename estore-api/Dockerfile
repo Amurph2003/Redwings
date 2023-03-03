@@ -4,6 +4,7 @@ WORKDIR /home/app
 COPY src /home/app/src
 COPY data /home/app/data
 COPY pom.xml /home/app
+COPY Redwings.jar /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:18
