@@ -1,0 +1,15 @@
+<div id="search-component">
+    <!-- <label id="search" for="search-box">Search Jerseys</label> -->
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" placeholder="Search for Jerseys"/>
+    
+    <div *ngIf="user">
+        <ul class="results">
+            <li *ngFor="let jersey of jerseys$ | async">
+                <a routerLink="/{{user.username}}/view/{{jersey.id}}" id="sb">
+                    <img id="searchImg" width="75px" height="px" src="{{jersey.imageUrl}}" alt="Displays an image of jersey" >
+                    <div id="sbText">#{{jersey.number}} {{jersey.name}} <br> {{jersey.price | currency}}</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,7 +1,0 @@
-com/estore/api/estoreapi/persistence/InventoryFileDAOTest.class
-com/estore/api/estoreapi/model/ShoppingCartTest.class
-com/estore/api/estoreapi/persistence/ShoppingCartFileDAOTest.class
-com/estore/api/estoreapi/model/JerseyTest.class
-com/estore/api/estoreapi/EstoreApiApplicationTests.class
-com/estore/api/estoreapi/controller/ShoppingCartControllerTest.class
-com/estore/api/estoreapi/controller/InventoryControllerTest.class
