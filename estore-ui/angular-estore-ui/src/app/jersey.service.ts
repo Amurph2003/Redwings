@@ -15,7 +15,7 @@ import { MessageService } from './message.service';
 })
 export class JerseyService {
 
-  private jerseysUrl = 'http://140.84.180.148:8080/products';
+  private jerseysUrl = 'https://140.84.180.148:8080/products';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
