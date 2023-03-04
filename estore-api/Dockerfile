@@ -11,13 +11,13 @@ FROM openjdk:18
 WORKDIR /app
 
 # Copy the jar file into our app
-COPY ./target/spring-0.0.1-SNAPSHOT.jar /app
+COPY ./target/estore-api-0.0.1-SNAPSHOT.jar /app
 
 # Exposing port 8080
 EXPOSE 8080
 
 # Starting the application
-CMD ["java", "-jar", "spring-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "estore-api-0.0.1-SNAPSHOT.jar"]
 
 # FROM openjdk:18
 # COPY --from=build /home/app/target/estore-api-0.0.1-SNAPSHOT.war /usr/local/lib/Redwings.war

@@ -10,7 +10,7 @@
 	<groupId>com.estore.api</groupId>
 	<artifactId>estore-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>estore-api</name>
 	<description>API for E-Store</description>
 	<properties>
