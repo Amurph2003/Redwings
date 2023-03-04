@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShoppingCartFileDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.persistence</a> &gt; <span class="el_source">ShoppingCartFileDAO.java</span></div><h1>ShoppingCartFileDAO.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.persistence;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.estore.api.estoreapi.model.Jersey;
+import com.estore.api.estoreapi.model.ShoppingCart;
+
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ShoppingCartFileDAO implements ShoppingCartDAO {
+
+    // Loggers!
+
+<span class="fc" id="L23">    private static final Logger LOG = Logger.getLogger(ShoppingCartFileDAO.class.getName());</span>
+    // Map system like inventory, but uses usernames instead of id's
+    Map&lt;String, ShoppingCart&gt; shoppingCarts;
+    private ObjectMapper objectMapper;  
+    private String filename;
+
+    /**
+     * Creates a Shopping Cart File Data Access Object
+     * 
+     * @param filename Filename to read from and write to
+     * @param objectMapper Provides JSON Object to/from Java Object serialization and deserialization
+     * 
+     * @throws IOException when file cannot be accessed or read from
+     */
+<span class="fc" id="L37">    public ShoppingCartFileDAO(@Value(&quot;${shopping-carts.file}&quot;) String filename, ObjectMapper objectMapper) throws IOException {</span>
+<span class="fc" id="L38">        this.filename = filename;</span>
+<span class="fc" id="L39">        this.objectMapper = objectMapper;</span>
+<span class="fc" id="L40">        load();</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Saves the {@linkplain Jersey jerseys} from the map into the file as an array of JSON objects
+     * 
+     * @return true if the {@link Jersey jerseys} were written successfully
+     * 
+     * @throws IOException when file cannot be accessed or written to
+     */
+    private boolean save() throws IOException {
+<span class="fc" id="L51">        ShoppingCart[] cartArray = getShoppingCarts(null);</span>
+
+        // Serializes the Java Objects to JSON objects into the file
+        // writeValue will thrown an IOException if there is an issue
+        // with the file or reading from the file
+<span class="fc" id="L56">        objectMapper.writeValue(new File(filename),cartArray);</span>
+<span class="fc" id="L57">        return true;</span>
+    }
+   
+    /**
+     * Loads {@linkplain Jersey jersey} from the JSON file into the map
+     * 
+     * @return true if the file was read successfully
+     * 
+     * @throws IOException when file cannot be accessed or read from
+     */
+    private boolean load() throws IOException {
+<span class="fc" id="L68">        shoppingCarts = new TreeMap&lt;&gt;();</span>
+
+        // Deserializes the JSON objects from the file into an array of shopping carts
+        // readValue will throw an IOException if there's an issue with the file
+        // or reading from the file
+<span class="fc" id="L73">        ShoppingCart[] cartArray = objectMapper.readValue(new File(filename),ShoppingCart[].class);</span>
+        
+        // Add each shopping cart to the tree map
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (ShoppingCart cart: cartArray) {</span>
+<span class="fc" id="L77">            shoppingCarts.put(cart.getName(), cart);</span>
+        }
+<span class="fc" id="L79">        return true;</span>
+    }
+
+    /**
+     * Generates an array of {@linkplain Jersey jerseys} from the tree map for any
+     * {@linkplain Jersey jerseys} that contains the text specified by containsText
+     * &lt;br&gt;
+     * If containsText is null, the array contains all of the {@linkplain Jersey jerseys}
+     * in the tree map
+     * 
+     * @return  The array of {@link Jersey jerseys}, may be empty
+     */
+    private ShoppingCart[] getShoppingCarts(String username) { // if containsText == null, no filter
+<span class="fc" id="L92">        ArrayList&lt;ShoppingCart&gt; cartArrayList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (ShoppingCart cart : shoppingCarts.values()) {</span>
+<span class="fc" id="L95">            cartArrayList.add(cart);</span>
+<span class="fc" id="L96">        }</span>
+
+<span class="fc" id="L98">        ShoppingCart[] cartArray = new ShoppingCart[cartArrayList.size()];</span>
+<span class="fc" id="L99">        cartArrayList.toArray(cartArray);</span>
+<span class="fc" id="L100">        return cartArray;</span>
+    }
+
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public boolean removeJersey(String username, Jersey jersey) throws IOException {
+<span class="fc" id="L108">        ShoppingCart currentCart = shoppingCarts.get(username);</span>
+<span class="fc" id="L109">        synchronized(currentCart) {</span>
+            // if jersey exists in cart, then decrement quantity or delete if only 1 exists
+<span class="pc bpc" id="L111" title="2 of 6 branches missed.">            if (currentCart != null &amp;&amp; currentCart.getName().equals(username) &amp;&amp; currentCart.getCart().contains(jersey)) {</span>
+<span class="fc" id="L112">                int index = currentCart.getCart().indexOf(jersey);</span>
+<span class="fc" id="L113">                Jersey inCart = currentCart.getCart().get(index);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if (inCart.getQuantity() == 1) {</span>
+<span class="fc" id="L115">                    LOG.info(&quot;1 left&quot;);</span>
+<span class="fc" id="L116">                    currentCart.removeJersey(jersey);</span>
+                } else {
+<span class="fc" id="L118">                    LOG.info(&quot;More then 1 left&quot;);</span>
+<span class="fc" id="L119">                    inCart.decrementQuantity();</span>
+                }
+<span class="fc" id="L121">                return save();</span>
+            }
+        
+<span class="fc" id="L124">            return false; // doesn't exist</span>
+        }
+    }
+
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public Jersey addJersey(String username, Jersey jersey) throws IOException {
+<span class="fc" id="L133">        ShoppingCart currentCart = shoppingCarts.get(username);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if(currentCart != null) {</span>
+<span class="fc" id="L135">            synchronized(currentCart) {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                if(!currentCart.addJersey(jersey)) {</span>
+<span class="fc" id="L137">                    LOG.info(&quot;Equals Cart!&quot;);</span>
+<span class="fc" id="L138">                    int quantityIncrease = 1;</span>
+<span class="fc" id="L139">                    int index = currentCart.getCart().indexOf(jersey);</span>
+<span class="fc" id="L140">                    Jersey inCart = currentCart.getCart().get(index);</span>
+<span class="fc" id="L141">                    inCart.addToQuantity(quantityIncrease);</span>
+<span class="fc" id="L142">                    jersey = inCart;</span>
+                }
+<span class="fc" id="L144">                save(); // may throw an IOException</span>
+<span class="fc" id="L145">            }</span>
+        } else {
+<span class="fc" id="L147">            return null;</span>
+        }
+<span class="fc" id="L149">        return jersey;</span>
+    }
+
+     /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public Jersey[] getCart(String username) throws IOException {
+<span class="fc" id="L157">        synchronized(shoppingCarts) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            if (shoppingCarts.containsKey(username)) {</span>
+<span class="fc" id="L159">                ArrayList&lt;Jersey&gt; cartList = shoppingCarts.get(username).getCart();</span>
+<span class="fc" id="L160">                Jersey[] cartArray = new Jersey[cartList.size()];</span>
+<span class="fc" id="L161">                cartList.toArray(cartArray);</span>
+<span class="fc" id="L162">                return cartArray;</span>
+            } else {
+<span class="fc" id="L164">                return null;</span>
+            }
+        }
+    }
+
+    @Override
+    public boolean createShoppingCart(String username) throws IOException {
+<span class="fc" id="L171">        ShoppingCart newCart = new ShoppingCart(username);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        for(String key: shoppingCarts.keySet()) {</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            if(key.equals(username)) {</span>
+<span class="fc" id="L174">                return false;</span>
+            }
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">        shoppingCarts.put(username, newCart);</span>
+<span class="fc" id="L178">        save();</span>
+<span class="fc" id="L179">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
