@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -70,7 +71,7 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
         // Deserializes the JSON objects from the file into an array of shopping carts
         // readValue will throw an IOException if there's an issue with the file
         // or reading from the file
-        ShoppingCart[] cartArray = objectMapper.readValue(new File(filename),ShoppingCart[].class);
+        ShoppingCart[] cartArray = objectMapper.readValue(new InputStreamReader(getClass().getResourceAsStream(filename)),ShoppingCart[].class);
         
         // Add each shopping cart to the tree map
         for (ShoppingCart cart: cartArray) {

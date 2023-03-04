@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -127,7 +128,7 @@ public class InventoryFileDAO implements InventoryDAO {
         // Deserializes the JSON objects from the file into an array of jerseys
         // readValue will throw an IOException if there's an issue with the file
         // or reading from the file
-        Jersey[] jerseyArray = objectMapper.readValue(new File(filename),Jersey[].class);
+        Jersey[] jerseyArray = objectMapper.readValue(new InputStreamReader(getClass().getResourceAsStream(filename)),Jersey[].class);
 
         // Add each jersey to the tree map and keep track of the greatest id
         for (Jersey jersey : jerseyArray) {
