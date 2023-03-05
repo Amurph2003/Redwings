@@ -18,7 +18,7 @@ export class JerseyService {
   private jerseysUrl = 'http://140.84.180.148:8080/products';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
   };
 
   constructor(
