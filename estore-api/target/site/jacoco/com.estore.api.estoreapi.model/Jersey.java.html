@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Jersey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.model</a> &gt; <span class="el_source">Jersey.java</span></div><h1>Jersey.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents a hockey jersey being sold.
+ * 
+ * @author Team Red Wings
+ */
+public class Jersey {
+
+    static final String STRING_FORMAT = &quot;Jersey [id=%d, name=%s, number=%d, price=%f, size=%s, color=%s, quantity=%d, imageUrl=%s]&quot;;
+
+    @JsonProperty(&quot;id&quot;) private int id;
+    @JsonProperty(&quot;name&quot;) private String name;
+    @JsonProperty(&quot;number&quot;) private int number;
+    @JsonProperty(&quot;price&quot;) private double price;
+    @JsonProperty(&quot;size&quot;) private Size size;
+    @JsonProperty(&quot;color&quot;) private Color color;
+    @JsonProperty(&quot;quantity&quot;) private int quantity;
+    @JsonProperty(&quot;imageUrl&quot;) private String imageUrl;
+
+    /**
+     * Create a hockey jersey.
+     * @param name The player name on the back of the jersey.
+     * @param number The player number on the jersey.
+     * @param price The price of the jersey.
+     * @param size The jersey size.
+     * @param color The jersey color.
+     * @param quantity The number of jerseys of this type there are.
+     * @param imageUrl The URL of the image representing this jersey within the project.
+     */
+<span class="fc" id="L33">    public Jersey(@JsonProperty(&quot;id&quot;) int id, @JsonProperty(&quot;name&quot;) String name, @JsonProperty(&quot;number&quot;) int number, @JsonProperty(&quot;price&quot;) double price, @JsonProperty(&quot;size&quot;) Size size, @JsonProperty(&quot;color&quot;) Color color, @JsonProperty(&quot;quantity&quot;) int quantity, @JsonProperty(&quot;imageUrl&quot;) String imageUrl) {</span>
+<span class="fc" id="L34">        this.id = id;</span>
+<span class="fc" id="L35">        this.name = name;</span>
+<span class="fc" id="L36">        this.number = number;</span>
+<span class="fc" id="L37">        this.price = price;</span>
+<span class="fc" id="L38">        this.size = size;</span>
+<span class="fc" id="L39">        this.color = color;</span>
+<span class="fc" id="L40">        this.quantity = quantity;</span>
+<span class="fc" id="L41">        this.imageUrl = imageUrl;</span>
+<span class="fc" id="L42">    }</span>
+
+    // Will write getters and setters as needed
+
+    public int getId() {
+<span class="fc" id="L47">        return this.id;</span>
+    }
+
+    public String getName() {
+<span class="fc" id="L51">        return this.name;</span>
+    }
+
+    public int getNumber() {
+<span class="fc" id="L55">        return this.number;</span>
+    }
+
+    public double getPrice() {
+<span class="fc" id="L59">        return this.price;</span>
+    }
+
+    public Size getSize() {
+<span class="fc" id="L63">        return this.size;</span>
+    }
+
+    public Color getColor() {
+<span class="fc" id="L67">        return this.color;</span>
+    }
+
+    public int getQuantity() {
+<span class="fc" id="L71">        return this.quantity;</span>
+    }
+
+    public String getImageUrl() {
+<span class="fc" id="L75">        return this.imageUrl;</span>
+    }
+
+    public void setColor(Color c){
+<span class="fc" id="L79">        this.color = c;</span>
+<span class="fc" id="L80">    }</span>
+
+    public void setSize(Size s){
+<span class="fc" id="L83">        this.size = s;</span>
+<span class="fc" id="L84">    }</span>
+
+    public void setImageUrl(String imageUrl){
+<span class="nc" id="L87">        this.imageUrl = imageUrl;</span>
+<span class="nc" id="L88">    }</span>
+
+    public void addToQuantity(int add) {
+<span class="fc" id="L91">        this.quantity += add;</span>
+<span class="fc" id="L92">    }</span>
+
+    public void decrementQuantity() {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if(this.quantity &gt; 0) {</span>
+<span class="fc" id="L96">            this.quantity--;</span>
+        }
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Jersey Conflicts Method
+     * @param jersey is new jersey to compare to current
+     * @return true/false whether a jersey conflicts with this one
+     */
+    public boolean conflicts(Object o) {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if(o instanceof Jersey) {</span>
+<span class="fc" id="L107">            Jersey other = (Jersey)o;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if(this.number == other.getNumber()</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                &amp;&amp; !this.name.equals(other.getName())) {</span>
+<span class="fc" id="L110">                    return true;</span>
+                } else {
+<span class="fc" id="L112">                    return false;</span>
+                }
+        } else {
+<span class="fc" id="L115">            return false;</span>
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if(o instanceof Jersey) {</span>
+<span class="fc" id="L122">            Jersey other = (Jersey)o;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            if(this.name.equals(other.getName())</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">                &amp;&amp; this.number == other.getNumber()</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                &amp;&amp; this.price == other.getPrice()</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                &amp;&amp; this.size.equals(other.getSize())</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                &amp;&amp; this.color.equals(other.getColor())) {</span>
+<span class="fc" id="L128">                    return true;</span>
+                } else {
+<span class="fc" id="L130">                    return false;</span>
+                }
+        } else {
+<span class="fc" id="L133">            return false;</span>
+        }
+    }
+
+
+    @Override
+<span class="fc" id="L139">    public String toString() {return String.format(STRING_FORMAT, id, name, number, price, size, color, quantity, imageUrl);}</span>
+
+}  
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

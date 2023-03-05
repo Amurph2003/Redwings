@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShoppingCartController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.controller</a> &gt; <span class="el_source">ShoppingCartController.java</span></div><h1>ShoppingCartController.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.controller;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.estore.api.estoreapi.model.Jersey;
+import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
+
+/**
+ * Handles the REST API requests for products in the shopping cart
+ * &lt;p&gt;
+ * {@literal @}RestController Spring annotation identifies this class as a REST API
+ * method handler to the Spring framework
+ * 
+ * @author Team Red Wings
+ */
+@RestController
+@RequestMapping(&quot;shopping-carts&quot;)
+public class ShoppingCartController {
+<span class="fc" id="L32">    private static final Logger LOG = Logger.getLogger(ShoppingCartController.class.getName());</span>
+    private ShoppingCartDAO shoppingCartDao;
+
+    /**
+     * Creates a REST API controller to reponds to requests
+     * 
+     * @param shoppingCartDao The {@link ShoppingCartDAO Shopping Cart Data Access Object} to perform CRUD operations
+     * &lt;br&gt;
+     * This dependency is injected by the Spring Framework
+     */
+<span class="fc" id="L42">    public ShoppingCartController(ShoppingCartDAO shoppingCartDao) {</span>
+<span class="fc" id="L43">        this.shoppingCartDao = shoppingCartDao;</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Adds the {@linkplain Jersey jersey} to the user's shopping cart
+     * 
+     * @param username The username of the user updating their shopping cart
+     * 
+     * @param jersey The {@link Jersey jersey} to add
+     * 
+     * @return ResponseEntity with added {@link Jersey jersey} object and HTTP status of OK if updated
+     * ResponseEntity with HTTP status of NOT_FOUND if the cart is not found
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PutMapping(&quot;/{username}&quot;)
+    public ResponseEntity&lt;Jersey&gt; addJersey(@PathVariable String username, @RequestBody Jersey jersey){
+<span class="fc" id="L59">        LOG.info(&quot;PUT /shopping-carts/ &quot; + username);</span>
+        try{
+<span class="fc" id="L61">            Jersey found = shoppingCartDao.addJersey(username, jersey);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if(found != null)</span>
+<span class="fc" id="L63">                return new ResponseEntity&lt;Jersey&gt;(found, HttpStatus.OK);</span>
+            else
+<span class="fc" id="L65">                return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+<span class="fc" id="L67">        catch (IOException e){</span>
+<span class="fc" id="L68">            LOG.log(Level.SEVERE, e.getLocalizedMessage());</span>
+<span class="fc" id="L69">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Deletes a {@linkplain Jersey Jersey} from the user's shopping cart
+     * 
+     * @param username The username of the user deleting from their cart
+     * 
+     * @param jersey The id of the {@link Jersey Jersey} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted
+     * ResponseEntity with HTTP status of NOT_FOUND if not found
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping(&quot;/{username}&quot;)
+    public ResponseEntity&lt;Jersey&gt; deleteJersey(@PathVariable String username, @RequestBody Jersey jersey) {
+<span class="fc" id="L86">        LOG.info(&quot;DELETE /shopping-carts/&quot; + username); </span>
+
+        try {
+<span class="fc" id="L89">            boolean bool = shoppingCartDao.removeJersey(username, jersey);  // delete</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (bool) {</span>
+<span class="fc" id="L91">                return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+            }
+
+<span class="fc" id="L94">           return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND); // jersey not found</span>
+        }
+<span class="fc" id="L96">        catch (IOException e) {</span>
+<span class="fc" id="L97">            LOG.log(Level.SEVERE,e.getLocalizedMessage());</span>
+<span class="fc" id="L98">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Gets the shopping cart for the given user
+     * 
+     * @param username The username of the user retrieving their shopping cart
+     * 
+     * @return ResponseEntity HTTP status of OK if successfuly retrieved&lt;br&gt;
+     * ResponseEntity with HTTP status of NOT_FOUND if not found&lt;br&gt;
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping(&quot;/{username}&quot;)
+    public ResponseEntity&lt;Jersey[]&gt; getCart(@PathVariable String username){
+<span class="fc" id="L113">        LOG.info(&quot;GET /shopping-carts/&quot; + username);</span>
+        try {
+<span class="fc" id="L115">            Jersey[] cart = shoppingCartDao.getCart(username);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if (cart != null)</span>
+<span class="fc" id="L117">                return new ResponseEntity&lt;Jersey[]&gt;(cart, HttpStatus.OK);</span>
+            else
+<span class="fc" id="L119">                return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        
+<span class="fc" id="L121">        } catch(IOException e) {</span>
+<span class="fc" id="L122">           LOG.log(Level.SEVERE,e.getLocalizedMessage());</span>
+<span class="fc" id="L123">           return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    @PostMapping(&quot;/{username}&quot;)
+    public ResponseEntity&lt;Jersey[]&gt; createShoppingCart(@PathVariable String username) {
+<span class="fc" id="L129">        LOG.info(&quot;POST /shopping-carts/&quot; + username);</span>
+
+        try {
+<span class="fc" id="L132">            boolean created = shoppingCartDao.createShoppingCart(username);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if(created == false) {</span>
+<span class="fc" id="L134">                return new ResponseEntity&lt;&gt;(HttpStatus.CONFLICT);</span>
+            }
+<span class="fc" id="L136">            return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+<span class="fc" id="L137">        } catch (IOException e) {</span>
+<span class="fc" id="L138">            LOG.log(Level.SEVERE, e.getLocalizedMessage());</span>
+<span class="fc" id="L139">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
