@@ -12,8 +12,8 @@ import { User } from './user';
 })
 export class ShoppingCartService {
 
-  private shoppingCartsUrl = 'https://ec2-100-25-162-148.compute-1.amazonaws.com:8080/shopping-carts';
-  private jerseysUrl = 'https://ec2-100-25-162-148.compute-1.amazonaws.com:8080/products';
+  private shoppingCartsUrl = 'https://100.25.162.148.nip.io/shopping-carts';
+  private jerseysUrl = 'https://100.25.162.148.nip.io/products';
 
 
   httpOptions = {

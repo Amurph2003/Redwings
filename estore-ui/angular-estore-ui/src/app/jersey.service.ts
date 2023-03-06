@@ -15,7 +15,7 @@ import { MessageService } from './message.service';
 })
 export class JerseyService {
 
-  private jerseysUrl = 'https://ec2-100-25-162-148.compute-1.amazonaws.com:8080/products';
+  private jerseysUrl = 'https://100.25.162.148.nip.io/products';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
