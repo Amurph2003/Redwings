@@ -62,14 +62,14 @@ export class JerseyDetailComponent implements OnInit {
 
   save(): void {
   if (this.jersey?.imageUrl === null || this.jersey?.imageUrl === "null" || this.jersey!.imageUrl.length < 2) {
-    this.jersey!.imageUrl = "../../assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp";
+    this.jersey!.imageUrl = "assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp";
   } else if (this.jersey!.imageUrl.length < 20 ) {
-    this.jersey!.imageUrl = "../../assets/jerseyImages/"+this.jersey?.imageUrl;
+    this.jersey!.imageUrl = "assets/jerseyImages/"+this.jersey?.imageUrl;
   }
 
   if(!this.isAddedImage()) {
-    if(this.jersey?.imageUrl != "../../assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp") {
-      this.jersey!.imageUrl = "../../assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp";
+    if(this.jersey?.imageUrl != "assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp") {
+      this.jersey!.imageUrl = "assets/defaults/" + this.jersey!.color.toLowerCase() + ".webp";
     }
   }
 
@@ -100,7 +100,7 @@ export class JerseyDetailComponent implements OnInit {
   }
 
   isAddedImage(): boolean {
-    if (this.jersey?.imageUrl === "../../assets/defaults/red.webp" || this.jersey?.imageUrl === "../../assets/defaults/white.webp") {
+    if (this.jersey?.imageUrl === "assets/defaults/red.webp" || this.jersey?.imageUrl === "assets/defaults/white.webp") {
       return false;
     } else {
       return true;

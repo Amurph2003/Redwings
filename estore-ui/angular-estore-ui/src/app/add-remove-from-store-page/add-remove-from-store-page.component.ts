@@ -54,9 +54,9 @@ export class AddRemoveFromStorePageComponent implements OnInit {
     const number = Number(num)
     const price = Number(pr)
     if (imageUrl === "null" || imageUrl.length < 2) {
-      imageUrl = "../../assets/defaults/" + color.toLowerCase() + ".webp";
+      imageUrl = "assets/defaults/" + color.toLowerCase() + ".webp";
     } else if ((imageUrl.length < 20)) {
-      imageUrl = "../../assets/jerseyImages/"+imageUrl;
+      imageUrl = "assets/jerseyImages/"+imageUrl;
     }
 
     this.jerseyService.addJersey({ name, number, price, size, color, quantity, imageUrl } as unknown as Jersey)
@@ -73,7 +73,7 @@ export class AddRemoveFromStorePageComponent implements OnInit {
   }
 
   auto(image: string): boolean {
-    if (image === "../../assets/defaults/red.webp" || image === "../../assets/defaults/white.webp"){
+    if (image === "assets/defaults/red.webp" || image === "assets/defaults/white.webp"){
       return false;
     }
     return true;
