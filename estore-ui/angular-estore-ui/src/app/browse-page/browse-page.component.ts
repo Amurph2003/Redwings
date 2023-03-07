@@ -74,7 +74,7 @@ export class BrowsePageComponent implements OnInit {
   }
 
   auto(image: string): boolean {
-    if (image === "../../assets/defaults/red.webp" || image === "../../assets/defaults/white.webp"){
+    if (image === "assets/defaults/red.webp" || image === "assets/defaults/white.webp"){
       return false;
     }
     return true;
